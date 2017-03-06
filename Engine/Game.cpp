@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Matrix.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -38,8 +39,47 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
+	while (!wnd.kbd.KeyIsEmpty())
+	{
+		// get an event from the queue
+		const Keyboard::Event e = wnd.kbd.ReadKey();
+		// check if it is a press event
+		if (e.IsPress())
+		{
+			// check if the event was for the left key
+			if (e.GetCode() == VK_LEFT)
+			{
+				activePiece.MoveLeft(matrix);
+			}
+			if (e.GetCode() == VK_RIGHT)
+			{
+				activePiece.MoveRight(matrix);
+			}
+			if (e.GetCode() == 'X')
+			{
+				activePiece.RotateCW(matrix);
+			}
+			if (e.GetCode() == 'Z')
+			{
+				activePiece.RotateCCW(matrix);
+			}
+			if (e.GetCode() == VK_UP)
+			{
+				activePiece.Rotate180(matrix);
+			}
+		}
+	}
+	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		activePiece.MoveDown(matrix);
+	}
+
 }
 
 void Game::ComposeFrame()
 {
+	matrix.Draw(gfx);
+	activePiece.Draw(gfx);
 }
+

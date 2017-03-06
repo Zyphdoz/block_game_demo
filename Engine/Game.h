@@ -24,6 +24,8 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Sound.h"
+#include "Matrix.h"
+#include "ActivePiece.h"
 
 class Game
 {
@@ -44,4 +46,6 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	Matrix matrix;
+	ActivePiece activePiece;
 };
