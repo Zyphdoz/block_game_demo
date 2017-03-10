@@ -49,9 +49,9 @@ bool ActivePiece::MoveDown(Matrix& matrix)
 
 bool ActivePiece::RotateCW(Matrix& matrix)
 {
-	if (!CollisionRotate(matrix, 4))
+	if (!CollisionRotate(matrix, 1))
 	{
-		rotationIndex = (rotationIndex + 4) % 16;
+		orientation = (orientation + 1) % offset.size();
 		return true;
 	}
 	else
@@ -62,9 +62,9 @@ bool ActivePiece::RotateCW(Matrix& matrix)
 
 bool ActivePiece::RotateCCW(Matrix& matrix)
 {
-	if (!CollisionRotate(matrix, 12))
+	if (!CollisionRotate(matrix, 3))
 	{
-		rotationIndex = (rotationIndex + 12) % 16;
+		orientation = (orientation + 3) % offset.size();
 		return true;
 	}
 	else
@@ -75,9 +75,9 @@ bool ActivePiece::RotateCCW(Matrix& matrix)
 
 bool ActivePiece::Rotate180(Matrix& matrix)
 {
-	if (!CollisionRotate(matrix, 8))
+	if (!CollisionRotate(matrix, 2))
 	{
-		rotationIndex = (rotationIndex + 8) % 16;
+		orientation = (orientation + 2) % offset.size();
 		return true;
 	}
 	else
@@ -88,9 +88,9 @@ bool ActivePiece::Rotate180(Matrix& matrix)
 
 bool ActivePiece::CollisionMove(Matrix & matrix, int val)
 {
-	for (int i = rotationIndex; i < rotationIndex + 4; i++)
+	for (int i = 0; i < offset[orientation].size(); i++)
 	{
-		if (matrix.GetState()[origin + val + offset[i]] != 0)
+		if (matrix.GetState()[origin + val + offset[orientation][i]] != 0)
 		{
 			return true;
 		}
@@ -100,10 +100,10 @@ bool ActivePiece::CollisionMove(Matrix & matrix, int val)
 
 bool ActivePiece::CollisionRotate(Matrix & matrix, int val)
 {
-	int newRotationIndex = (rotationIndex + val) % 16;
-	for (int i = newRotationIndex; i < newRotationIndex + 4; i++)
+	int newOrientation = (orientation + val) % offset.size();
+	for (int i = 0; i < offset[orientation].size(); i++)
 	{
-		if (matrix.GetState()[origin + offset[i]] != 0)
+		if (matrix.GetState()[origin + offset[newOrientation][i]] != 0)
 		{
 			return true;
 		}
@@ -113,9 +113,9 @@ bool ActivePiece::CollisionRotate(Matrix & matrix, int val)
 
 void ActivePiece::LockPiece(Matrix & matrix)
 {
-	for (int i = rotationIndex; i < rotationIndex + 4; i++)
+	for (int i = 0; i < offset[orientation].size(); i++)
 	{
-		matrix.AddPiece(origin + offset[i], id);
+		matrix.AddPiece(origin + offset[orientation][i], id);
 	}
 	matrix.ClearLines();
 	NewPiece();
@@ -130,7 +130,7 @@ void ActivePiece::NewPiece()
 	id = pieceAll[randomNumber].id;
 	offset = pieceAll[randomNumber].offset;
 	origin = pieceAll[randomNumber].origin;
-	rotationIndex = pieceAll[randomNumber].rotationIndex;
+	orientation = pieceAll[randomNumber].orientation;
 }
 
 /*
@@ -143,15 +143,15 @@ void ActivePiece::Draw(Graphics & gfx)
 {
 	int x;
 	int y;
-	for (int i = rotationIndex; i < rotationIndex + 4; i++)
+	for (int i = 0; i < offset[orientation].size(); i++)
 	{
 		//the matrix has some hidden rows to allow pieces to rotate when they are at the top
 		//and we only want to draw the minos that are in the visible portion of the matrix
-		if (origin + offset[i] < 231)
+		if (origin + offset[orientation][i] < 231)
 		{
 			//1d array index to x y coordinates.
-			x = (origin + offset[i]) % 11;
-			y = (origin + offset[i]) / 11;
+			x = (origin + offset[orientation][i]) % 11;
+			y = (origin + offset[orientation][i]) / 11;
 			//NOTE: the origin of the matrix is bottom left. 21 - y will work for now.
 			y = 21 - y;
 			//x y coordinates to x y pixel coordinates

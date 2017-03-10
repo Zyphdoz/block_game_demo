@@ -3,15 +3,15 @@
 
 struct Tetromino
 {
-	Tetromino(std::array<int, 16> init, int in_origin, int in_rotationIndex, int in_id)
+	Tetromino(std::array<std::array<int, 4>, 4> init, int in_origin, int in_orientation, int in_id)
 		:
 		offset(init),
 		id(in_id),
-		rotationIndex(in_rotationIndex),
+		orientation(in_orientation),
 		origin(in_origin)
 	{}
-	std::array<int, 16> offset;
+	std::array<std::array<int, 4>, 4> offset;
 	int id;
-	int rotationIndex;
+	int orientation;
 	int origin;
 };
