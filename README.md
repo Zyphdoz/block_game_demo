@@ -1,6 +1,6 @@
 The code here is not a demo for any particular game.
 
-Many people have a tendency to use x,y and nested loops everywhere when coding falling block games. 
+Many people have a tendency to use x,y and nested loops everywhere when coding falling block games. This can make the code unnessecarily complicated and difficult to understand.   
 I think there is a nicer way to do this which involves storing the matrix in a 1d array and using offsets to represent the tetrominos.
 This project is intended to serve as a code demo of that approach. 
 
