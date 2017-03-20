@@ -20,8 +20,8 @@ public:
 	Color IdToColor(int i);
 
 private:
-	bool CollisionMove(Matrix& matrix, int val);
-	bool CollisionRotate(Matrix& matrix, int val);
+	bool CanMove(Matrix& matrix, int val);
+	bool CanRotate(Matrix& matrix, int val);
 	void LockPiece(Matrix& matrix);
 	void NewPiece();
 

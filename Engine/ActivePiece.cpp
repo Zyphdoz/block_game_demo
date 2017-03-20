@@ -8,7 +8,7 @@ ActivePiece::ActivePiece()
 
 bool ActivePiece::MoveLeft(Matrix& matrix)
 {
-	if (!CollisionMove(matrix, -1))
+	if (CanMove(matrix, -1))
 	{
 		origin -= 1;
 		return true;
@@ -21,7 +21,7 @@ bool ActivePiece::MoveLeft(Matrix& matrix)
 
 bool ActivePiece::MoveRight(Matrix& matrix)
 {
-	if (!CollisionMove(matrix, 1))
+	if (CanMove(matrix, 1))
 	{
 		origin += 1;
 		return true;
@@ -34,7 +34,7 @@ bool ActivePiece::MoveRight(Matrix& matrix)
 
 bool ActivePiece::MoveDown(Matrix& matrix)
 {
-	if (!CollisionMove(matrix, -11))
+	if (CanMove(matrix, -11))
 	{
 		origin -= 11;
 		return true;
@@ -49,7 +49,7 @@ bool ActivePiece::MoveDown(Matrix& matrix)
 
 bool ActivePiece::RotateCW(Matrix& matrix)
 {
-	if (!CollisionRotate(matrix, 1))
+	if (CanRotate(matrix, 1))
 	{
 		orientation = (orientation + 1) % offset.size();
 		return true;
@@ -62,7 +62,7 @@ bool ActivePiece::RotateCW(Matrix& matrix)
 
 bool ActivePiece::RotateCCW(Matrix& matrix)
 {
-	if (!CollisionRotate(matrix, 3))
+	if (CanRotate(matrix, 3))
 	{
 		orientation = (orientation + 3) % offset.size();
 		return true;
@@ -75,7 +75,7 @@ bool ActivePiece::RotateCCW(Matrix& matrix)
 
 bool ActivePiece::Rotate180(Matrix& matrix)
 {
-	if (!CollisionRotate(matrix, 2))
+	if (CanRotate(matrix, 2))
 	{
 		orientation = (orientation + 2) % offset.size();
 		return true;
@@ -86,29 +86,29 @@ bool ActivePiece::Rotate180(Matrix& matrix)
 	}
 }
 
-bool ActivePiece::CollisionMove(Matrix & matrix, int val)
+bool ActivePiece::CanMove(Matrix & matrix, int val)
 {
 	for (int i = 0; i < offset[orientation].size(); i++)
 	{
 		if (matrix.GetState()[origin + val + offset[orientation][i]] != 0)
 		{
-			return true;
+			return false;
 		}
 	}
-	return false;
+	return true;
 }
 
-bool ActivePiece::CollisionRotate(Matrix & matrix, int val)
+bool ActivePiece::CanRotate(Matrix & matrix, int val)
 {
 	int newOrientation = (orientation + val) % offset.size();
 	for (int i = 0; i < offset[orientation].size(); i++)
 	{
 		if (matrix.GetState()[origin + offset[newOrientation][i]] != 0)
 		{
-			return true;
+			return false;
 		}
 	}
-	return false;
+	return true;
 }
 
 void ActivePiece::LockPiece(Matrix & matrix)
