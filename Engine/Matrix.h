@@ -11,7 +11,7 @@ public:
 	std::array<int, 253> GetState() const;
 	void AddPiece(int i, int id);
 	void Draw(Graphics& gfx);
-	Color GetColor(int cell);
+	Color GetColor(int cell) const;
 	void ClearLines();
 
 private:

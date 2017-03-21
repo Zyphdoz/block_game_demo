@@ -17,11 +17,11 @@ public:
 	bool Rotate180(Matrix& matrix);
 
 	void Draw(Graphics& gfx);
-	Color IdToColor(int i);
+	Color IdToColor(int i) const;
 
 private:
-	bool CanMove(Matrix& matrix, int val);
-	bool CanRotate(Matrix& matrix, int val);
+	bool CanMove(const Matrix& matrix, int val) const;
+	bool CanRotate(const Matrix& matrix, int val) const;
 	void LockPiece(Matrix& matrix);
 	void NewPiece();
 

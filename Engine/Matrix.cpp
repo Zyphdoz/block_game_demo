@@ -89,7 +89,7 @@ void Matrix::Draw(Graphics & gfx)
 	}
 }
 
-Color Matrix::GetColor(int cell)
+Color Matrix::GetColor(int cell) const
 {
 	Color c;
 	if (state[cell] == 0)

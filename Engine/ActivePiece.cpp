@@ -86,7 +86,7 @@ bool ActivePiece::Rotate180(Matrix& matrix)
 	}
 }
 
-bool ActivePiece::CanMove(Matrix & matrix, int val)
+bool ActivePiece::CanMove(const Matrix & matrix, int val) const
 {
 	for (int i = 0; i < offset[orientation].size(); i++)
 	{
@@ -98,7 +98,7 @@ bool ActivePiece::CanMove(Matrix & matrix, int val)
 	return true;
 }
 
-bool ActivePiece::CanRotate(Matrix & matrix, int val)
+bool ActivePiece::CanRotate(const Matrix & matrix, int val) const
 {
 	int newOrientation = (orientation + val) % offset.size();
 	for (int i = 0; i < offset[orientation].size(); i++)
@@ -162,7 +162,7 @@ void ActivePiece::Draw(Graphics & gfx)
 	}
 }
 
-Color ActivePiece::IdToColor(int i)
+Color ActivePiece::IdToColor(int i) const
 {
 	Color c;
 	if (i == 0)
