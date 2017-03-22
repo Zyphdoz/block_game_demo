@@ -8,9 +8,9 @@ ActivePiece::ActivePiece()
 
 bool ActivePiece::MoveLeft(Matrix& matrix)
 {
-	if (CanMove(matrix, -1))
+	if (CanMove(matrix, left))
 	{
-		origin -= 1;
+		origin += left;
 		return true;
 	}
 	else
@@ -21,9 +21,9 @@ bool ActivePiece::MoveLeft(Matrix& matrix)
 
 bool ActivePiece::MoveRight(Matrix& matrix)
 {
-	if (CanMove(matrix, 1))
+	if (CanMove(matrix, right))
 	{
-		origin += 1;
+		origin += right;
 		return true;
 	}
 	else
@@ -34,9 +34,9 @@ bool ActivePiece::MoveRight(Matrix& matrix)
 
 bool ActivePiece::MoveDown(Matrix& matrix)
 {
-	if (CanMove(matrix, -11))
+	if (CanMove(matrix, down))
 	{
-		origin -= 11;
+		origin += down;
 		return true;
 	}
 	else
@@ -49,9 +49,9 @@ bool ActivePiece::MoveDown(Matrix& matrix)
 
 bool ActivePiece::RotateCW(Matrix& matrix)
 {
-	if (CanRotate(matrix, 1))
+	if (CanRotate(matrix, clockwise))
 	{
-		orientation = (orientation + 1) % offset.size();
+		orientation = (orientation + clockwise) % offset.size();
 		return true;
 	}
 	else
@@ -62,9 +62,9 @@ bool ActivePiece::RotateCW(Matrix& matrix)
 
 bool ActivePiece::RotateCCW(Matrix& matrix)
 {
-	if (CanRotate(matrix, 3))
+	if (CanRotate(matrix, counterclockwise))
 	{
-		orientation = (orientation + 3) % offset.size();
+		orientation = (orientation + counterclockwise) % offset.size();
 		return true;
 	}
 	else
@@ -75,9 +75,9 @@ bool ActivePiece::RotateCCW(Matrix& matrix)
 
 bool ActivePiece::Rotate180(Matrix& matrix)
 {
-	if (CanRotate(matrix, 2))
+	if (CanRotate(matrix, twice))
 	{
-		orientation = (orientation + 2) % offset.size();
+		orientation = (orientation + twice) % offset.size();
 		return true;
 	}
 	else

@@ -8,6 +8,20 @@
 class ActivePiece
 {
 public:
+	enum Direction
+	{
+		left = -1,
+		right = 1,
+		down = -11,
+		up = 11
+	};
+	enum Rotation
+	{
+		clockwise = 1,
+		twice = 2,
+		counterclockwise = 3
+	};
+public:
 	ActivePiece();
 	bool MoveLeft(Matrix& matrix);
 	bool MoveRight(Matrix& matrix);
